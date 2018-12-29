@@ -89,20 +89,37 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
     git clone https://github.com/opencv/opencv_contrib.git
     cd opencv_contrib && git checkout 3.4.1
     cd ~/opencv && mkdir build && cd build
-    cmake -D CMAKE_BUILD_TYPE=RELEASE \
-        -D CMAKE_INSTALL_PREFIX=/usr/local \
-        -D INSTALL_C_EXAMPLES=ON \
-        -D INSTALL_PYTHON_EXAMPLES=ON \
-        -D WITH_TBB=ON \
-        -D WITH_V4L=ON \
-        -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
-        -D BUILD_EXAMPLES=ON ..
-    nproc
-    # substitute 4 by output of nproc
-    make -j4
-    sudo make install
-    sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/opencv.conf'
-    sudo ldconfig
+
+    cmake -DCMAKE_CXX_FLAGS=-std=c++11 \
+        -DCMAKE_BUILD_TYPE=RELEASE \
+        -DCMAKE_INSTALL_PREFIX=./install \
+        -DBUILD_EXAMPLES=OFF \
+        -DBUILD_DOCS=OFF \
+        -DBUILD_PERF_TESTS=OFF \
+        -DBUILD_TESTS=OFF \
+        -DINSTALL_C_EXAMPLES=OFF \
+        -DENABLE_PRECOMPILED_HEADERS=OFF \
+        -DWITH_OPENMP=ON \
+        -DWITH_V4L=OFF \
+        -DWITH_TBB=ON \
+        -DWITH_QT=OFF \
+        -DWITH_OPENGL=ON \
+        -DWITH_JPEG=ON \
+        -DWITH_FFMPEG=ON \
+        -DWITH_GSTREAMER=ON \
+        -DWITH_OPENCL=ON \
+        -DWITH_GPHOTO2=OFF \
+        -DWITH_LIBV4L=OFF \
+        -DINSTALL_PYTHON_EXAMPLES=OFF \
+        -DBUILD_SHARED_LIBS=ON \
+        -DENABLE_CXX11=ON \
+        -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules ..
+
+        vim ~/.bashrc
+        // add the content to .bashrc
+        export OpenCV_DIR=/path/to/opencv4.0
+        export OpenCV_INCLUDE_DIRS=/path/to/include/opencv4
+        export OpenCV_LIBS=/path/to/opencv4.0/lib
 
 ### 6. Testing
 
