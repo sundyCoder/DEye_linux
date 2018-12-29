@@ -1,4 +1,4 @@
-#include "include/utils.h"
+#include "include/utils.hpp"
 
 #include <math.h>
 #include <fstream>
@@ -28,6 +28,7 @@
 
 #include <opencv2/core/mat.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include "GraphDefDecryptor.hpp"
 
 using namespace std;
 using namespace cv;
@@ -40,13 +41,15 @@ using tensorflow::int32;
 
 /** Read a model graph definition (xxx.pb) from disk, and creates a session object you can use to run it.
  */
-Status loadGraph(const string &graph_file_name,
-                 unique_ptr<tensorflow::Session> *session) {
+Status loadGraph(const string &graph_file_name,unique_ptr<tensorflow::Session> *session) {
     tensorflow::GraphDef graph_def;
-    Status load_graph_status =
-            ReadBinaryProto(tensorflow::Env::Default(), graph_file_name, &graph_def);
+    //Status load_graph_status = ReadBinaryProto(tensorflow::Env::Default(), graph_file_name, &graph_def);
+    const std::string key = "df6c8cd6696cfe35a6ea8dc14722132420181230";
+    auto load_graph_status = tfsecured::GraphDefDecryptAES(graph_file_name,         // path to *.pb file (frozen graph)
+                                                &graph_def,
+                                                key);         // your key
     if (!load_graph_status.ok()) {
-        return tensorflow::errors::NotFound("Failed to load compute graph at '",
+        return tensorflow::errors::NotFound("Failed to load compute model at '",
                                             graph_file_name, "'");
     }
     session->reset(tensorflow::NewSession(tensorflow::SessionOptions()));

@@ -1,6 +1,6 @@
 
 #include "include/DEye.h"
-#include "include/detect.h"
+#include "include/detect.hpp"
 
 
 __DLLEXPORT int lodDEyeNet(DEyeNet* dEyeNet_p){

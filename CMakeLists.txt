@@ -3,12 +3,15 @@ cmake_minimum_required(VERSION 3.7)
 project(tf_detector_example)
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "-O3 -std=c++11 -pthread -lprotobuf -DNDEBUG")
 
 # Find source files
-file(GLOB SOURCES src/*.cpp)
+file(GLOB SOURCES src/*.cpp src/*.c)
 
 # Include header files
+include_directories(src/)
 include_directories(src/include)
+include_directories(src/internal)
 
 # Create shared library
 add_library(DEye SHARED ${SOURCES})
@@ -34,4 +37,4 @@ include_directories("/usr/local/include/tf/tensorflow/contrib/makefile/downloads
 
 # Link TensorFlow libs
 target_link_libraries(DEye "/usr/local/lib/libCore.so")
-
+target_link_libraries(DEye "/usr/local/lib/libprotobuf.so")

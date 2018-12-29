@@ -1,6 +1,6 @@
 
-#include "include/detect.h"
-#include "include/utils.h"
+#include "include/detect.hpp"
+#include "include/utils.hpp"
 #include <iostream>
 using namespace std;
 using namespace cv;
