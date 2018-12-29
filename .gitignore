@@ -1,0 +1,6 @@
+cmake-build-debug/
+.idea/
+/model/
+/build/
+/app/build/
+/lib/libCore.so
