@@ -27,7 +27,7 @@ struct DEFECT{
     cv::Rect defectRect;
 };
 
-__DLLEXPORT int lodDEyeNet(DEyeNet* dEyeNet_p);
+__DLLEXPORT int loadDEyeNet(DEyeNet* dEyeNet_p);
 __DLLEXPORT int detect(const DEyeNet dEyeNet_p, cv::Mat& frame, std::vector<DEFECT>& defects);
 
 #ifdef __cplusplus

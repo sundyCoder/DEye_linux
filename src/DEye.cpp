@@ -3,7 +3,7 @@
 #include "include/detect.hpp"
 
 
-__DLLEXPORT int lodDEyeNet(DEyeNet* dEyeNet_p){
+__DLLEXPORT int loadDEyeNet(DEyeNet* dEyeNet_p){
     std::string modelPath = "model.so";
     std::string labelMapPath = "model.map";
     auto defector = new Detector();

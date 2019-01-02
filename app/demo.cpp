@@ -4,7 +4,7 @@
 int main(int argc, char** argv){
     // 1. load DEye model.
     DEyeNet dEyeNet_p;
-    int ret = lodDEyeNet(&dEyeNet_p);
+    int ret = loadDEyeNet(&dEyeNet_p);
     if(ret == -1){
         std::cout << "load DEye model failed!"<< std::endl;
         return -1;

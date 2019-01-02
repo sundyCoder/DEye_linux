@@ -7,7 +7,7 @@ using namespace cv;
 
 
 int Detector::loadModel(std::string modelPath, std::string labelMapPath){
-    LOG(INFO) << "Loading mode..." << endl;
+    //LOG(INFO) << "Loading mode..." << endl;
     Status loadGraphStatus = loadGraph(modelPath, &session);
     if (!loadGraphStatus.ok()) {
         LOG(ERROR) << "loadModel(): ERROR" << loadGraphStatus;
@@ -35,7 +35,7 @@ int Detector::detect(cv::Mat& frame,std::vector<DEFECT>& defects){
     int height = frame.rows;
     int width = frame.cols;
     int channels = frame.channels();
-    LOG(INFO) << frame.rows << ","<<frame.cols<<","<<frame.channels() <<","<<frame.type()<< endl;
+    //LOG(INFO) << frame.rows << ","<<frame.cols<<","<<frame.channels() <<","<<frame.type()<< endl;
 
     cvtColor(frame, frame, COLOR_BGR2RGB);
     std::vector<Tensor> outputs;
