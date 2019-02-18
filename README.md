@@ -136,6 +136,17 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
         cmake ..
         make
 
+### 6. model encryption
+    sh export.sh
+    cp train_log/pb/frozen_inference_graph.pb TFSecured/python/
+    python3 encrypt_model.py ./demo/models/frozen_inference_graph.pb ./model.so df6c8cd6696cfe35a6ea8dc14722132420181230
+    
+    'model.so' is generated.
+
+### Release 
+    model.so
+    model.map
+
 ### 7.Reference
     https://github.com/lysukhin/tensorflow-object-detection-cpp 
     https://tuatini.me/building-tensorflow-as-a-standalone-project/
