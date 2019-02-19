@@ -48,12 +48,16 @@ int Detector::detect(cv::Mat& frame,std::vector<DEFECT>& defects){
     string inputLayer = "image_tensor:0";
     vector<string> outputLayer = {"detection_boxes:0", "detection_scores:0", "detection_classes:0", "num_detections:0"};
     Status runStatus = session->Run({{inputLayer, tensor}}, outputLayer, {}, &outputs);
+#if 0
     if (!runStatus.ok()) {
-        LOG(ERROR) << "Running model failed: " << runStatus;
+        //LOG(ERROR) << "Running model failed: " << runStatus;
+        std::cout<<"STATUS:"<< runStatus <<std::endl;
         return -1;
     }else{
-        LOG(INFO) << "Running model successfully. " << runStatus;
+        //LOG(INFO) << "Running model successfully. " << runStatus;
+        std::cout<<"STATUS:"<< runStatus <<std::endl;
     }
+#endif
 
     // Extract results from the outputs vector
     tensorflow::TTypes<float>::Flat scores = outputs[1].flat<float>();
