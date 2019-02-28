@@ -9,6 +9,7 @@ __DLLEXPORT int loadDEyeNet(DEyeNet* dEyeNet_p){
     auto defector = new Detector();
     if(defector){
         defector->loadModel(modelPath,labelMapPath);
+        //defector->loadModel(modelPath);
         *dEyeNet_p = defector;
     }else{
         return -1;
@@ -17,10 +18,11 @@ __DLLEXPORT int loadDEyeNet(DEyeNet* dEyeNet_p){
     return 1;
 }
 
-__DLLEXPORT int detect(const DEyeNet dEyeNet_p, cv::Mat& frame, std::vector<DEFECT>& defects){
+
+__DLLEXPORT int detect(const DEyeNet dEyeNet_p, cv::Mat& frame, P_DEFECTS p_defects){
     if (dEyeNet_p) {
         auto detector = static_cast<Detector*>(dEyeNet_p);
-        int ret = detector->detect(frame, defects);
+        int ret = detector->detect(frame, p_defects);
         return ret;
     }
     return -1;

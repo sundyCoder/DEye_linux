@@ -7,6 +7,7 @@ using namespace cv;
 
 
 int Detector::loadModel(std::string modelPath, std::string labelMapPath){
+//int Detector::loadModel(std::string modelPath){
     //LOG(INFO) << "Loading mode..." << endl;
     Status loadGraphStatus = loadGraph(modelPath, &session);
     if (!loadGraphStatus.ok()) {
@@ -15,8 +16,7 @@ int Detector::loadModel(std::string modelPath, std::string labelMapPath){
     } else{
         LOG(INFO) << "DEye model loaded" << endl;
     }
-
-    // Load labels map from .pbtxt file
+    
     Status readLabelsMapStatus = readLabelsMapFile(labelMapPath,labelsMap);
     if (!readLabelsMapStatus.ok()) {
         LOG(ERROR) << "readLabelsMapFile(): ERROR" << loadGraphStatus;
@@ -26,16 +26,42 @@ int Detector::loadModel(std::string modelPath, std::string labelMapPath){
     return 1;
 }
 
-int Detector::detect(cv::Mat& frame,std::vector<DEFECT>& defects){
+int Detector::freeModel(){
+    Status status = session->Close(); // returns ok delete session; 
+    if (!status.ok()) {
+        return 0; // failed
+    } 
+    return 1; // success
+}
+
+int Detector::mapLabel(std::string label){
+    int number = 0;
+    if(label == "cashang"){
+        number = 1;
+    }else if(label == "duanjing"){
+        number = 2;
+    }else if(label == "duanwei"){
+        number = 3;
+    }else if(label == "podong"){
+        number = 4;
+    }else if(label == "wuzang"){
+        number = 5;
+    }else{
+        number = 0;
+    }
+    return number;
+}
+
+//int Detector::detect(cv::Mat& frame,std::vector<DEFECT>& defects){
+int Detector::detect(cv::Mat& frame,P_DEFECTS p_defects){
     double thresholdScore = 0.5;
-    double thresholdIOU = 0.7;
+    double thresholdIOU = 0.7;    
     if ( frame.empty() ){
      LOG(INFO) << "Read image error or not found!" << endl;
     }
     int height = frame.rows;
     int width = frame.cols;
     int channels = frame.channels();
-    //LOG(INFO) << frame.rows << ","<<frame.cols<<","<<frame.channels() <<","<<frame.type()<< endl;
 
     cvtColor(frame, frame, COLOR_BGR2RGB);
     std::vector<Tensor> outputs;
@@ -74,7 +100,8 @@ int Detector::detect(cv::Mat& frame,std::vector<DEFECT>& defects){
         //             << boxes(0, goodIdxs.at(i), 1) << "," << boxes(0, goodIdxs.at(i), 2) << ","
         //             << boxes(0, goodIdxs.at(i), 3);
         DEFECT defect;
-        defect.type =  labelsMap[classes(goodIdxs.at(i))];
+        std::string def_type =  labelsMap[classes(goodIdxs.at(i))];        
+        defect.type =  mapLabel(def_type);
         defect.score = floorf(scores(goodIdxs.at(i)) * 1000) / 1000;
 
         double yMin = boxes(0,goodIdxs.at(i),0);
@@ -90,7 +117,8 @@ int Detector::detect(cv::Mat& frame,std::vector<DEFECT>& defects){
 
         cv::Rect rect(x, y, w , h);
         defect.defectRect = rect;
-        defects.push_back(defect);
+	    p_defects->defects[i] = defect;
+	    p_defects->size++;        
     }
     return numDef;
 }

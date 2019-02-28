@@ -43,11 +43,11 @@ using tensorflow::int32;
  */
 Status loadGraph(const string &graph_file_name,unique_ptr<tensorflow::Session> *session) {
     tensorflow::GraphDef graph_def;
-    //Status load_graph_status = ReadBinaryProto(tensorflow::Env::Default(), graph_file_name, &graph_def);
-    const std::string key = "df6c8cd6696cfe35a6ea8dc14722132420181230";
-    auto load_graph_status = tfsecured::GraphDefDecryptAES(graph_file_name,         // path to *.pb file (frozen graph)
-                                                &graph_def,
-                                                key);         // your key
+    Status load_graph_status = ReadBinaryProto(tensorflow::Env::Default(), graph_file_name, &graph_def);
+    // const std::string key = "df6c8cd6696cfe35a6ea8dc14722132420181230";
+    // auto load_graph_status = tfsecured::GraphDefDecryptAES(graph_file_name,         // path to *.pb file (frozen graph)
+    //                                             &graph_def,
+    //                                             key);         // your key
     if (!load_graph_status.ok()) {
         return tensorflow::errors::NotFound("Failed to load compute model at '",
                                             graph_file_name, "'");

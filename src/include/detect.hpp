@@ -47,10 +47,13 @@ class Detector {
     std::unique_ptr<tensorflow::Session> session;
     std::map<int, std::string> labelsMap = std::map<int,std::string>();
     public:
+        int mapLabel(std::string label);
         int loadModel(std::string modelPath, std::string labelMapPath);
+        int freeModel();
         //int detect(Mat frame, double thresholdScore, double thresholdIOU, std::vector<std::vector<float>> &boxes, std::vector<float> &scores, std::vector<size_t> &labels);
         //int detect(Mat& frame, double thresholdScore, double thresholdIOU,std::vector<defectInfo>& defects);
-        int detect(cv::Mat& frame, std::vector<DEFECT>& defects);
+        //int detect(cv::Mat& frame, std::vector<DEFECT>& defects);
+        int detect(cv::Mat& frame, P_DEFECTS defects);
 };
 
 #endif //TF_DETECT_H
