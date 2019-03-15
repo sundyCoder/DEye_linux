@@ -37,14 +37,33 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
     sudo make install
 
 ### 3.Install TensorFlow
+    Step 1: 
+        vim tensorflow/BUILD
+        
+        	diff --git a/tensorflow/BUILD b/tensorflow/BUILD
+            index 9b62a50452..e90e9bc3bc 100644
+            --- a/tensorflow/BUILD
+            +++ b/tensorflow/BUILD
+            @@ -447,7 +447,8 @@ tf_cc_shared_object(
+             )
+	 
+             tf_cc_shared_object(
+            -    name = "libtensorflow_cc.so",
+            +    #name = "libtensorflow_cc.so",
+            +    name = "libCore.so",
+                 linkopts = select({
+                 "//tensorflow:darwin": [
+                 
+    Step 2: 
+    
     rm -fr ~/.cache/bazel*
     bazel clean
     a. ./configure
     b. build
         // build with avx2 support
-        bazel build -c opt --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-mfpmath=both --copt=-msse4.2 --config=monolithic //tensorflow:libtensorflow_cc.so
+        bazel build -c opt --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-mfpmath=both --copt=-msse4.2 --config=monolithic //tensorflow:libCore.so
         // build with no avx2 support
-        bazel build -c opt --copt=-mfma --copt=-mfpmath=both --copt=-msse4.2 --config=monolithic //tensorflow:libtensorflow_cc.so
+        bazel build -c opt --copt=-mfma --copt=-mfpmath=both --copt=-msse4.2 --config=monolithic //tensorflow:libCore.so
     c. Then Copy the following include headers and dynamic shared library to /usr/local/lib and /usr/local/include:
         mkdir /usr/local/include/tf
         cp -r bazel-genfiles/ /usr/local/include/tf/
