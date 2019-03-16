@@ -40,19 +40,25 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
     Step 1: 
         vim tensorflow/BUILD
         
-        	diff --git a/tensorflow/BUILD b/tensorflow/BUILD
-            index 9b62a50452..e90e9bc3bc 100644
-            --- a/tensorflow/BUILD
-            +++ b/tensorflow/BUILD
-            @@ -447,7 +447,8 @@ tf_cc_shared_object(
-             )
-	 
-             tf_cc_shared_object(
-            -    name = "libtensorflow_cc.so",
-            +    #name = "libtensorflow_cc.so",
-            +    name = "libCore.so",
-                 linkopts = select({
-                 "//tensorflow:darwin": [
+
+	462 
+	463 tf_cc_shared_object(
+	464     #name = "libtensorflow.so",
+	465     name = "libCore.so",
+	466     linkopts = select({
+	467         "//tensorflow:darwin": [
+	468             "-Wl,-exported_symbols_list",  # This line must be directly followed by the exported_symbols.lds file
+	469             "$(location //tensorflow/c:exported_symbols.lds)",
+	470             "-Wl,-install_name,@rpath/libtensorflow.so",
+	471         ],
+	472         "//tensorflow:windows": [],
+	473         "//conditions:default": [
+	474             "-z defs",
+	475             "-Wl,--version-script",  #  This line must be directly followed by the version_script.lds file
+	476             "$(location //tensorflow/c:version_script.lds)",
+	477         ],
+	478     }),
+	479     visibility = ["//visibility:public"],
                  
     Step 2: 
     
