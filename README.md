@@ -66,10 +66,8 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
     bazel clean
     a. ./configure
     b. build
-        // build with avx2 support
-        bazel build -c opt --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-mfpmath=both --copt=-msse4.2 --config=monolithic //tensorflow:libCore.so
-        // build with no avx2 support
-        bazel build -c opt --copt=-mfma --copt=-mfpmath=both --copt=-msse4.2 --config=monolithic //tensorflow:libCore.so
+	bazel build -c opt --config=monolithic //tensorflow:libCore.so
+
     c. Then Copy the following include headers and dynamic shared library to /usr/local/lib and /usr/local/include:
         mkdir /usr/local/include/tf
         cp -r bazel-genfiles/ /usr/local/include/tf/
@@ -77,7 +75,7 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
         cp -r third_party /usr/local/include/tf/
         cp -r bazel-bin/libtensorflow_cc.so /usr/local/lib/
         
-        cp tensorflow/contrib/makefile/downloads/ /usr/local/include/tf/tensorflow/contrib/makefile/ -r
+        cp tensorflow/contrib/makefile/downloads /usr/local/include/tf/tensorflow/contrib/makefile/ -r
 
     d. compile
         g++ -std=c++11 -o tLoader -I/usr/local/include/tf -I/usr/local/include/eigen3 -g -Wall -D_DEBUG -Wshadow -Wno-sign-compare -w  -L/usr/local/lib/libtensorflow_cc `pkg-config --cflags --libs protobuf`  -ltensorflow_cc loader.cpp
