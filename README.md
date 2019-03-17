@@ -70,12 +70,13 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
 
     c. Then Copy the following include headers and dynamic shared library to /usr/local/lib and /usr/local/include:
         mkdir /usr/local/include/tf
-        cp -r bazel-genfiles/ /usr/local/include/tf/
-        cp -r tensorflow /usr/local/include/tf/
-        cp -r third_party /usr/local/include/tf/
-        cp -r bazel-bin/libtensorflow_cc.so /usr/local/lib/
-        
-        cp tensorflow/contrib/makefile/downloads /usr/local/include/tf/tensorflow/contrib/makefile/ -r
+        sudo cp -r bazel-genfiles/ /usr/local/include/tf/
+        sudo cp -r tensorflow /usr/local/include/tf/
+        sudo cp -r third_party /usr/local/include/tf/
+        sudo cp -r bazel-bin/libCore.so /usr/local/lib/
+        ./tensorflow/contrib/makefile/download_dependencies.sh
+        sudo cp -r tensorflow/contrib/makefile/downloads /usr/local/include/tf/tensorflow/contrib/makefile/
+	
 
     d. compile
         g++ -std=c++11 -o tLoader -I/usr/local/include/tf -I/usr/local/include/eigen3 -g -Wall -D_DEBUG -Wshadow -Wno-sign-compare -w  -L/usr/local/lib/libtensorflow_cc `pkg-config --cflags --libs protobuf`  -ltensorflow_cc loader.cpp
