@@ -25,13 +25,13 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 # ==================== PATHS TO SPECIFY! ==================== #
 # Eigen lib headers
 include_directories("/media/jlchen/C/3rd_party/eigen3/include/eigen3")
-include_directories("/media/jlchen/C/3rd_party/eigen3/include/eigen3")
 
 
 # TensorFlow headers
 include_directories("/usr/local/include/tf/")
 include_directories("/usr/local/include/tf/bazel-genfiles/")
 include_directories("/usr/local/include/tf/tensorflow/")
+include_directories("/usr/local/include/tf/tensorflow/contrib/")
 include_directories("/usr/local/include/tf/third-party/")
 include_directories("/usr/local/include/tf/tensorflow/contrib/makefile/downloads/absl/")
 

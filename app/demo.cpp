@@ -1,5 +1,6 @@
 #include "DEye.h"
 #include <iostream>
+#include "time.h"
 
 int main(int argc, char** argv){
     // 1. load DEye model.
@@ -11,8 +12,13 @@ int main(int argc, char** argv){
     }
 
     // 2. read image(loop read image)
-    std::string img_list[] = {"demo1.png", "demo2.png"};
+    std::string img_list[] = {"demo2.png", "demo1.png", "demo1.png","demo1.png"};
     for(auto name: img_list){
+
+        clock_t start, end;
+        double elapsed;
+        start = clock();
+
         cv::Mat inMat = cv::imread(name,cv::IMREAD_UNCHANGED);
         if(inMat.empty()){
             std::cout<<"Image read failed or not found!"<<std::endl;
@@ -43,6 +49,10 @@ int main(int argc, char** argv){
             }
             cv::imwrite("result_" + name,inMat);
         }
+	end = clock();
+        elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+        std::cout<<"time:"<<elapsed<<std::endl;
+
     }
    return 1;
 }
