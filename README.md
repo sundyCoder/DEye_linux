@@ -37,22 +37,46 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
     sudo make install
 
 ### 3.Install TensorFlow
+    Step 1: 
+        vim tensorflow/BUILD
+        
+
+	462 
+	463 tf_cc_shared_object(
+	464     #name = "libtensorflow.so",
+	465     name = "libCore.so",
+	466     linkopts = select({
+	467         "//tensorflow:darwin": [
+	468             "-Wl,-exported_symbols_list",  # This line must be directly followed by the exported_symbols.lds file
+	469             "$(location //tensorflow/c:exported_symbols.lds)",
+	470             "-Wl,-install_name,@rpath/libtensorflow.so",
+	471         ],
+	472         "//tensorflow:windows": [],
+	473         "//conditions:default": [
+	474             "-z defs",
+	475             "-Wl,--version-script",  #  This line must be directly followed by the version_script.lds file
+	476             "$(location //tensorflow/c:version_script.lds)",
+	477         ],
+	478     }),
+	479     visibility = ["//visibility:public"],
+                 
+    Step 2: 
+    
     rm -fr ~/.cache/bazel*
     bazel clean
     a. ./configure
     b. build
-        // build with avx2 support
-        bazel build -c opt --copt=-mavx --copt=-mavx2 --copt=-mfma --copt=-mfpmath=both --copt=-msse4.2 --config=monolithic //tensorflow:libtensorflow_cc.so
-        // build with no avx2 support
-        bazel build -c opt --copt=-mfma --copt=-mfpmath=both --copt=-msse4.2 --config=monolithic //tensorflow:libtensorflow_cc.so
+	bazel build -c opt --config=monolithic //tensorflow:libCore.so
+
     c. Then Copy the following include headers and dynamic shared library to /usr/local/lib and /usr/local/include:
         mkdir /usr/local/include/tf
-        cp -r bazel-genfiles/ /usr/local/include/tf/
-        cp -r tensorflow /usr/local/include/tf/
-        cp -r third_party /usr/local/include/tf/
-        cp -r bazel-bin/libtensorflow_cc.so /usr/local/lib/
-        
-        cp tensorflow/contrib/makefile/downloads/ /usr/local/include/tf/tensorflow/contrib/makefile/ -r
+        sudo cp -r bazel-genfiles/ /usr/local/include/tf/
+        sudo cp -r tensorflow /usr/local/include/tf/
+        sudo cp -r third_party /usr/local/include/tf/
+        sudo cp -r bazel-bin/libCore.so /usr/local/lib/
+        ./tensorflow/contrib/makefile/download_dependencies.sh
+        sudo cp -r tensorflow/contrib/makefile/downloads /usr/local/include/tf/tensorflow/contrib/makefile/
+	
 
     d. compile
         g++ -std=c++11 -o tLoader -I/usr/local/include/tf -I/usr/local/include/eigen3 -g -Wall -D_DEBUG -Wshadow -Wno-sign-compare -w  -L/usr/local/lib/libtensorflow_cc `pkg-config --cflags --libs protobuf`  -ltensorflow_cc loader.cpp
