@@ -114,12 +114,12 @@ int Detector::detect(cv::Mat& frame,P_DEFECTS p_defects){
         //             << boxes(0, goodIdxs.at(i), 1) << "," << boxes(0, goodIdxs.at(i), 2) << ","
         //             << boxes(0, goodIdxs.at(i), 3);
         DEFECT defect;
-        std::string def_type =  labelsMap[classes(goodIdxs.at(i))];        
-        defect.type =  mapLabel(def_type);
+        std::string def_type =  labelsMap[classes(goodIdxs.at(i))];                
         defect.score = floorf(scores(goodIdxs.at(i)) * 1000) / 1000;
-	if(defect.score > 0.4 && defect.score < 0.5){
-  	    def_type = "unknown";
-	}
+	    if(defect.score > 0.4 && defect.score < 0.5){
+  	        def_type = "unknown";
+	    }
+        defect.type =  mapLabel(def_type);
 
         double yMin = boxes(0,goodIdxs.at(i),0);
         double xMin = boxes(0,goodIdxs.at(i),1);

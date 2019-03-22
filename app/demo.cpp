@@ -55,6 +55,5 @@ int main(int argc, char** argv){
 
     }
    
-   unLoadDEyeNet(dEyeNet_p);
    return 1;
 }
