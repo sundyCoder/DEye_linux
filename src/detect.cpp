@@ -46,6 +46,20 @@ int Detector::mapLabel(std::string label){
         number = 4;
     }else if(label == "wuzang"){
         number = 5;
+    }else if(label == "gousha"){
+        number = 6;
+    }else if(label == "gousi"){
+        number = 7;
+    }else if(label == "loubai"){
+        number = 8;
+    }else if(label == "louzhen"){
+        number = 9;
+    }else if(label == "maosha"){
+        number = 10;
+    }else if(label == "se"){
+        number = 11;
+    }else if(label == "zhezhou"){
+        number = 12;
     }else{
         number = 0;
     }
@@ -54,7 +68,7 @@ int Detector::mapLabel(std::string label){
 
 //int Detector::detect(cv::Mat& frame,std::vector<DEFECT>& defects){
 int Detector::detect(cv::Mat& frame,P_DEFECTS p_defects){
-    double thresholdScore = 0.5;
+    double thresholdScore = 0.41;
     double thresholdIOU = 0.7;    
     if ( frame.empty() ){
      LOG(INFO) << "Read image error or not found!" << endl;
@@ -103,6 +117,9 @@ int Detector::detect(cv::Mat& frame,P_DEFECTS p_defects){
         std::string def_type =  labelsMap[classes(goodIdxs.at(i))];        
         defect.type =  mapLabel(def_type);
         defect.score = floorf(scores(goodIdxs.at(i)) * 1000) / 1000;
+	if(defect.score > 0.4 && defect.score < 0.5){
+  	    def_type = "unknown";
+	}
 
         double yMin = boxes(0,goodIdxs.at(i),0);
         double xMin = boxes(0,goodIdxs.at(i),1);
@@ -117,8 +134,8 @@ int Detector::detect(cv::Mat& frame,P_DEFECTS p_defects){
 
         cv::Rect rect(x, y, w , h);
         defect.defectRect = rect;
-	    p_defects->defects[i] = defect;
-	    p_defects->size++;        
+        p_defects->defects[i] = defect;
+        p_defects->size++;        
     }
     return numDef;
 }

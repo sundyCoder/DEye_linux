@@ -40,18 +40,43 @@ using tensorflow::Status;
 using tensorflow::string;
 using tensorflow::int32;
 
+int fuckPB(const std::string &modelPath, GraphDef *graph){    
+    std::ifstream file(modelPath, std::ios::binary | std::ios::ate);
+    std::vector<char> bytes;
+    if (!file.eof() && !file.fail()) {
+        file.seekg(0, std::ios_base::end);  //
+        std::streampos fileSize = file.tellg(); //
+        bytes.resize(fileSize);
+        
+        file.seekg(0, std::ios_base::beg); //
+        file.read(&bytes[0], fileSize);
+    } else {
+        return 1;
+    }
+
+    if (!graph->ParseFromArray(bytes.data(), (int)bytes.size())) {
+        return 1;
+    }
+    return 0;                                 
+}
+
 /** Read a model graph definition (xxx.pb) from disk, and creates a session object you can use to run it.
  */
 Status loadGraph(const string &graph_file_name,unique_ptr<tensorflow::Session> *session) {
     tensorflow::GraphDef graph_def;
+    
+    // int status = fuckPB(graph_file_name, &graph_def);
+    // if(status){
+    //     return tensorflow::errors::NotFound("Failed to load compute model '",graph_file_name, "'");
+    // }
+
     Status load_graph_status = ReadBinaryProto(tensorflow::Env::Default(), graph_file_name, &graph_def);
     // const std::string key = "df6c8cd6696cfe35a6ea8dc14722132420181230";
     // auto load_graph_status = tfsecured::GraphDefDecryptAES(graph_file_name,         // path to *.pb file (frozen graph)
     //                                             &graph_def,
     //                                             key);         // your key
     if (!load_graph_status.ok()) {
-        return tensorflow::errors::NotFound("Failed to load compute model at '",
-                                            graph_file_name, "'");
+        return tensorflow::errors::NotFound("Failed to load compute model at '",graph_file_name, "'");
     }
     session->reset(tensorflow::NewSession(tensorflow::SessionOptions()));
     Status session_create_status = (*session)->Create(graph_def);

@@ -12,7 +12,7 @@ int main(int argc, char** argv){
     }
 
     // 2. read image(loop read image)
-    std::string img_list[] = {"demo2.png", "demo1.png", "demo1.png","demo1.png"};
+    std::string img_list[] = {"demo2.png", "demo3.png"};
     for(auto name: img_list){
 
         clock_t start, end;
@@ -54,5 +54,7 @@ int main(int argc, char** argv){
         std::cout<<"time:"<<elapsed<<std::endl;
 
     }
+   
+   unLoadDEyeNet(dEyeNet_p);
    return 1;
 }
