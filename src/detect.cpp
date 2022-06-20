@@ -116,9 +116,9 @@ int Detector::detect(cv::Mat& frame,P_DEFECTS p_defects){
         DEFECT defect;
         std::string def_type =  labelsMap[classes(goodIdxs.at(i))];                
         defect.score = floorf(scores(goodIdxs.at(i)) * 1000) / 1000;
-	    if(defect.score > 0.4 && defect.score < 0.5){
-  	        def_type = "unknown";
-	    }
+	if(defect.score > 0.4 && defect.score < 0.5){
+  	    def_type = "unknown";
+	}
         defect.type =  mapLabel(def_type);
 
         double yMin = boxes(0,goodIdxs.at(i),0);
