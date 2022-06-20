@@ -179,6 +179,3 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
     https://medium.com/@fanzongshaoxing/tensorflow-c-api-to-run-a-object-detection-model-4d5928893b02
     windows: https://github.com/hluu11/SimpleTF-CPP
     https://github.com/sundyCoder/or/tree/master/models/research/tensorrt
-
-### 8. Management
-    df6c8cd6696cfe35a6ea8dc14722132420181230
