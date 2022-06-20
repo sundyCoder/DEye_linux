@@ -1,13 +1,6 @@
 # Tensorflow Object Detection
-A C++ example of running TensorFlow Object Detection model in live mode.
-Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecomment-318613222).
+A C++ example of running TensorFlow Object Detection model.
 
-## Requirements (for use without Bazel):
-* `TensorFlow` .so builds ([more](https://github.com/tensorflow/tensorflow/issues/2412#issuecomment-300628873), requires Bazel to build)
-* `Eigen3` headers ([more](http://eigen.tuxfamily.org/index.php?title=Main_Page))
-* `OpenCV` ([more](https://github.com/opencv/opencv))
-
-## Manual:
 ### 0. environment
     cuda9.0, cudnn7.3， ubuntu18.04, gcc6.5
 ### 1. Install Protobuf
@@ -151,22 +144,24 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
         cd build 
         cmake ..
         make
-    c. run app
+	
+    c. run app    
         cd app/build
 	./demo
 
-### 6. model encryption
+
+### 7. model encryption
     sh export.sh
     cp train_log/pb/frozen_inference_graph.pb TFSecured/python/
     python3 encrypt_model.py ./demo/models/frozen_inference_graph.pb ./model.so df6c8cd6696cfe35a6ea8dc14722132420181230
     
     'model.so' is generated.
 
-### 7. Library
+### 8. Library
     Model file: model.so  model.map
     Core library: libDEye.so, libCore.so ( please contact with me if you want)
 
-### 8.Reference
+### 9.Reference
 	@article{li2022eid,
 	  title={EID-GAN: Generative Adversarial Nets for Extremely Imbalanced Data Augmentation},
 	  author={Li, Wei and Chen, Jinlin and Cao, Jiannong and Ma, Chao and Wang, Jia and Cui, Xiaohui and Chen, Ping},
