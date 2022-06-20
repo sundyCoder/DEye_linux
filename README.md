@@ -7,14 +7,6 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
 * `Eigen3` headers ([more](http://eigen.tuxfamily.org/index.php?title=Main_Page))
 * `OpenCV` ([more](https://github.com/opencv/opencv))
 
-## Usage:
-1. Specify your own paths for necessary libs in `CmakeLists.txt`
-2. Specify your own paths for `frozen_inference_graph.pb` and `labels_map.pbtxt` in `main.cpp` (lines 44-47)
-3. Specify your video source (`main.cpp`, line 80)
-4. Have fun
-
-`demo/` dir contains frozen graph & labels map from [victordibia/handstracking](https://github.com/victordibia/handtracking) as an example. 
-
 ## Manual:
 ### 0. environment
     cuda9.0, cudnn7.3， ubuntu18.04, gcc6.5
@@ -159,6 +151,9 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
         cd build 
         cmake ..
         make
+    c. run app
+        cd app/build
+	./demo
 
 ### 6. model encryption
     sh export.sh
