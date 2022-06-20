@@ -1,4 +1,4 @@
-# tensorflow-object-detection-cpp
+# Tensorflow Object Detection
 A C++ example of running TensorFlow Object Detection model in live mode.
 Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecomment-318613222).
 
