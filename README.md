@@ -167,11 +167,19 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
     
     'model.so' is generated.
 
-### Release 
-    model.so
-    model.map
+### 7. Library
+    Model file: model.so  model.map
+    Core library: libDEye.so, libCore.so ( please contact with me if you want)
 
-### 7.Reference
+### 8.Reference
+	@article{li2022eid,
+	  title={EID-GAN: Generative Adversarial Nets for Extremely Imbalanced Data Augmentation},
+	  author={Li, Wei and Chen, Jinlin and Cao, Jiannong and Ma, Chao and Wang, Jia and Cui, Xiaohui and Chen, Ping},
+	  journal={IEEE Transactions on Industrial Informatics},
+	  year={2022},
+	  publisher={IEEE}
+	}
+
     https://github.com/lysukhin/tensorflow-object-detection-cpp 
     https://tuatini.me/building-tensorflow-as-a-standalone-project/
     https://medium.com/@fanzongshaoxing/tensorflow-c-api-to-run-a-object-detection-model-4d5928893b02
@@ -179,3 +187,5 @@ Inspired by [issue](https://github.com/tensorflow/models/issues/1741#issuecommen
     https://medium.com/@fanzongshaoxing/tensorflow-c-api-to-run-a-object-detection-model-4d5928893b02
     windows: https://github.com/hluu11/SimpleTF-CPP
     https://github.com/sundyCoder/or/tree/master/models/research/tensorrt
+
+
