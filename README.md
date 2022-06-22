@@ -1,5 +1,5 @@
-# Tensorflow Object Detection
-A C++ example of running TensorFlow Object Detection model.
+# Defect Inspection with Tensorflow
+A C++ example of defect inspection by running TensorFlow.
 <br>
 <p>
 DEye 🚀 please find the source code of windows version from the link: https://github.com/sundyCoder/DEye
