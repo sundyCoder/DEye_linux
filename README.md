@@ -5,6 +5,10 @@ A C++ example of defect inspection by running TensorFlow.
 DEye 🚀 please find the source code of windows version from the link: https://github.com/sundyCoder/DEye
 </p>
 
+Any problems please contact with me:
+Email: sundycoder@gmail.com
+QQ: 1316501606
+
 ### 0. environment
     cuda9.0, cudnn7.3， ubuntu18.04, gcc6.5
 ### 1. Install Protobuf
